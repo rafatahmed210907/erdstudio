@@ -11,7 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { ACCENT_COLORS, ENGINE_LABEL, type Engine, type Settings } from "@/lib/data/types";
-import { cn, hexToHslChannels } from "@/lib/utils";
+import { applyAppearance } from "@/lib/appearance";
+import { cn } from "@/lib/utils";
 
 const SECTIONS = [
   { id: "general", label: "General", icon: Settings2 },
@@ -32,14 +33,13 @@ export function SettingsScreen() {
   const [draft, setDraft] = useState<Settings | null>(null);
   const [pending, setPending] = useState(false);
   const active = draft ?? snapshot?.settings ?? null;
-  const draftTheme = draft?.theme;
-  const draftAccent = draft?.accent;
+  const theme = active?.theme;
+  const accent = active?.accent;
 
   useEffect(() => {
-    if (!draftTheme || !draftAccent) return;
-    setTheme(draftTheme);
-    document.documentElement.style.setProperty("--primary", hexToHslChannels(draftAccent));
-  }, [draftAccent, draftTheme, setTheme]);
+    if (!theme || !accent) return;
+    applyAppearance({ theme, accent }, setTheme);
+  }, [theme, accent, setTheme]);
 
   if (!snapshot || !active) return null;
   const dirty = JSON.stringify(active) !== JSON.stringify(snapshot.settings);
@@ -65,8 +65,7 @@ export function SettingsScreen() {
   function reset() {
     if (!snapshot) return;
     setDraft(null);
-    setTheme(snapshot.settings.theme);
-    document.documentElement.style.setProperty("--primary", hexToHslChannels(snapshot.settings.accent));
+    applyAppearance({ theme: snapshot.settings.theme, accent: snapshot.settings.accent }, setTheme);
   }
 
   const canvas = active.theme === "light" ? active.lightCanvasBackground : active.canvasBackground;

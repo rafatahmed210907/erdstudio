@@ -17,8 +17,11 @@ import type {
   Table,
   User,
 } from "@/lib/data/types";
+import { isReadOnlyDataStore } from "@/lib/data/storage-mode";
 
 const dbPath = path.join(process.cwd(), "data", "db.json");
+const readOnlyStore = isReadOnlyDataStore();
+let memorySnapshot: StudioSnapshot | null = null;
 const changes = new EventEmitter();
 changes.setMaxListeners(0);
 
@@ -34,6 +37,7 @@ function withLock<T>(work: () => Promise<T>): Promise<T> {
 }
 
 async function ensureFile() {
+  if (readOnlyStore) return;
   try {
     await fs.access(dbPath);
   } catch {
@@ -43,12 +47,27 @@ async function ensureFile() {
 }
 
 async function readSnapshot() {
+  if (readOnlyStore) {
+    if (memorySnapshot) return structuredClone(memorySnapshot);
+    try {
+      const raw = await fs.readFile(dbPath, "utf8");
+      memorySnapshot = JSON.parse(raw) as StudioSnapshot;
+    } catch {
+      memorySnapshot = createSeed();
+    }
+    return structuredClone(memorySnapshot);
+  }
   await ensureFile();
   const raw = await fs.readFile(dbPath, "utf8");
   return JSON.parse(raw) as StudioSnapshot;
 }
 
 async function writeSnapshot(snapshot: StudioSnapshot) {
+  if (readOnlyStore) {
+    memorySnapshot = structuredClone(snapshot);
+    changes.emit("revision", snapshot.revision);
+    return;
+  }
   await fs.mkdir(path.dirname(dbPath), { recursive: true });
   await fs.writeFile(dbPath, JSON.stringify(snapshot, null, 2));
   changes.emit("revision", snapshot.revision);

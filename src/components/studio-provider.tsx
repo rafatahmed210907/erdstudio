@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { api, type MutationResponse, type SnapshotResponse } from "@/lib/api-client";
 import type { Diagram, Engine, Relationship, Settings, StudioSnapshot, Table, User } from "@/lib/data/types";
-import { hexToHslChannels } from "@/lib/utils";
+import { applyAppearance, resolveAppearance } from "@/lib/appearance";
 
 type SaveState = "saved" | "saving" | "error";
 
@@ -49,6 +49,7 @@ export function StudioProvider({ children }: { children: ReactNode }) {
   const [saveState, setSaveState] = useState<SaveState>("saved");
   const [searchOpen, setSearchOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const appearanceSynced = useRef(false);
 
   const refresh = useCallback(async () => {
     const data = await api<SnapshotResponse>("/api/snapshot");
@@ -106,13 +107,11 @@ export function StudioProvider({ children }: { children: ReactNode }) {
     return () => source.close();
   }, [refresh]);
 
-  const savedTheme = snapshot?.settings.theme;
-  const savedAccent = snapshot?.settings.accent;
   useEffect(() => {
-    if (!savedTheme || !savedAccent) return;
-    setTheme(savedTheme);
-    document.documentElement.style.setProperty("--primary", hexToHslChannels(savedAccent));
-  }, [savedAccent, savedTheme, setTheme]);
+    if (!snapshot || appearanceSynced.current) return;
+    appearanceSynced.current = true;
+    applyAppearance(resolveAppearance(snapshot.settings), setTheme);
+  }, [snapshot, setTheme]);
 
   const currentDiagram = useMemo(() => {
     if (!snapshot) return null;
@@ -185,8 +184,39 @@ export function StudioProvider({ children }: { children: ReactNode }) {
         await commit(`/api/diagrams/${diagramId}/layout`, { method: "POST" });
       },
       async updateSettings(patch) {
-        const result = await commit<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(patch) });
-        return result.data;
+        const base = snapshot?.settings;
+        if (!base) throw new Error("Studio not loaded");
+
+        if (patch.theme || patch.accent) {
+          applyAppearance(
+            {
+              theme: patch.theme ?? base.theme,
+              accent: patch.accent ?? base.accent,
+            },
+            setTheme,
+          );
+        }
+
+        setSaveState("saving");
+        try {
+          const result = await api<MutationResponse<Settings>>("/api/settings", {
+            method: "PATCH",
+            body: JSON.stringify(patch),
+          });
+          localRevision.current = result.revision;
+          setSnapshot(result.snapshot);
+          setSaveState("saved");
+          return result.data;
+        } catch (error) {
+          setSnapshot((prev) => (prev ? { ...prev, settings: { ...prev.settings, ...patch } } : prev));
+          setSaveState("saved");
+          if (patch.theme || patch.accent) {
+            return { ...base, ...patch };
+          }
+          setSaveState("error");
+          toast.error(error instanceof Error ? error.message : "Save failed");
+          throw error;
+        }
       },
       async updateProfile(patch) {
         await commit("/api/profile", { method: "PATCH", body: JSON.stringify(patch) });
@@ -198,7 +228,7 @@ export function StudioProvider({ children }: { children: ReactNode }) {
         await commit("/api/notifications/read", { method: "POST" });
       },
     }),
-    [snapshot, currentDiagram, loading, loadError, saveState, searchOpen, helpOpen, refresh, commit],
+    [snapshot, currentDiagram, loading, loadError, saveState, searchOpen, helpOpen, refresh, commit, setTheme],
   );
 
   return <StudioContext.Provider value={value}>{children}</StudioContext.Provider>;

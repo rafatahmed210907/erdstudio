@@ -1,5 +1,5 @@
 {
-  "revision": 41,
+  "revision": 43,
   "session": {
     "signedIn": true
   },
@@ -516,7 +516,7 @@
       "description": "Customers, orders, products, and inventory.",
       "engine": "postgresql",
       "createdAt": "2026-10-30T12:00:00.000Z",
-      "updatedAt": "2026-11-02T13:08:25.737Z",
+      "updatedAt": "2026-11-02T13:13:22.377Z",
       "tables": [
         {
           "id": "tbl_users",
@@ -635,8 +635,8 @@
           "engine": "postgresql",
           "description": "Stores product information including pricing and inventory details.",
           "position": {
-            "x": 394,
-            "y": 290
+            "x": 320,
+            "y": 320
           },
           "style": {
             "header": "#ea580c",

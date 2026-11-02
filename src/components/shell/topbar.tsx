@@ -9,8 +9,9 @@ import { useStudio } from "@/components/studio-provider";
 import { Avatar } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn, formatRelative } from "@/lib/utils";
+import { applyAppearance, readStoredAppearance } from "@/lib/appearance";
 import { useIsClient } from "@/lib/use-client";
+import { cn, formatRelative } from "@/lib/utils";
 
 export function Topbar({
   onOpenMobileNav,
@@ -28,14 +29,16 @@ export function Topbar({
   const crumb = useMemo(() => breadcrumb(pathname, currentDiagram?.name ?? "Diagram", currentDiagram?.id), [pathname, currentDiagram]);
 
   async function toggleTheme() {
-    const current = resolvedTheme ?? snapshot?.settings.theme ?? "dark";
+    const stored = readStoredAppearance();
+    const current = resolvedTheme ?? stored?.theme ?? snapshot?.settings.theme ?? "dark";
     const next = current === "light" ? "dark" : "light";
-    setTheme(next);
+    const accent = stored?.accent ?? snapshot?.settings.accent ?? "#2f6bff";
+    applyAppearance({ theme: next, accent }, setTheme);
     await updateSettings({ theme: next });
   }
 
   const themeToggleIcon =
-    isClient && (resolvedTheme ?? snapshot?.settings.theme) === "light" ? (
+    isClient && (resolvedTheme ?? readStoredAppearance()?.theme ?? snapshot?.settings.theme) === "light" ? (
       <Moon className="h-4 w-4" />
     ) : (
       <Sun className="h-4 w-4" />
