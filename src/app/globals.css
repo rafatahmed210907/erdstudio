@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 216 42% 95%;
+    --foreground: 221 45% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 221 45% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 45% 11%;
+    --primary: 223 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 216 32% 93%;
+    --secondary-foreground: 221 45% 16%;
+    --muted: 216 32% 93%;
+    --muted-foreground: 216 17% 40%;
+    --accent: 216 32% 93%;
+    --accent-foreground: 221 45% 16%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 216 32% 86%;
+    --input: 216 32% 86%;
+    --ring: 223 100% 59%;
+    --sidebar: 216 38% 97%;
+    --canvas: 210 40% 98%;
+    --success: 152 64% 32%;
+    --radius: 0.7rem;
+    --duration-fast: 120ms;
+    --duration-default: 200ms;
+    --duration-slow: 320ms;
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: 222 58% 5%;
+    --foreground: 222 73% 95%;
+    --card: 222 48% 10%;
+    --card-foreground: 222 73% 95%;
+    --popover: 222 48% 9%;
+    --popover-foreground: 222 73% 95%;
+    --primary: 223 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 36% 14%;
+    --secondary-foreground: 222 40% 90%;
+    --muted: 222 36% 14%;
+    --muted-foreground: 218 22% 68%;
+    --accent: 222 36% 16%;
+    --accent-foreground: 222 40% 92%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 221 36% 18%;
+    --input: 221 36% 20%;
+    --ring: 223 100% 59%;
+    --sidebar: 222 55% 7%;
+    --canvas: 220 49% 8%;
+    --success: 152 60% 46%;
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 14px;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 999px;
+}
+
+@media print {
+  aside,
+  header {
+    display: none !important;
+  }
+
+  main {
+    overflow: visible !important;
+  }
+}

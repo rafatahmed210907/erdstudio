@@ -1,0 +1,1119 @@
+{
+  "revision": 41,
+  "session": {
+    "signedIn": true
+  },
+  "user": {
+    "id": "user_john",
+    "name": "John Doe",
+    "email": "john.doe@erdstudio.app",
+    "role": "Owner",
+    "initials": "JD"
+  },
+  "settings": {
+    "applicationName": "ERD Studio",
+    "language": "English",
+    "defaultEngine": "postgresql",
+    "theme": "dark",
+    "accent": "#2f6bff",
+    "defaultView": "table",
+    "gridSize": 20,
+    "canvasBackground": "#0b1220",
+    "lightCanvasBackground": "#f8fafc",
+    "snapToGrid": true,
+    "showMinimap": true,
+    "showConnectionHandles": true,
+    "keyboardShortcuts": true,
+    "showNotifications": true,
+    "aiAssistant": false,
+    "autosave": true,
+    "currentDiagramId": "diag_ecom"
+  },
+  "notifications": [
+    {
+      "id": "dabf945e-6c25-4e70-822f-a7d7342b9675",
+      "title": "Table saved",
+      "body": "payments was updated in E-commerce Database.",
+      "createdAt": "2026-11-02T12:48:44.741Z",
+      "read": true
+    },
+    {
+      "id": "5d300bac-c4ba-42fb-af61-a236203e67c0",
+      "title": "Relationship saved",
+      "body": "references now connects the selected fields.",
+      "createdAt": "2026-11-02T12:47:33.431Z",
+      "read": true
+    },
+    {
+      "id": "note_autosave",
+      "title": "Autosave complete",
+      "body": "E-commerce Database was saved on this device.",
+      "createdAt": "2026-11-02T11:00:00.000Z",
+      "read": true
+    },
+    {
+      "id": "note_template",
+      "title": "Template ready",
+      "body": "PostgreSQL Schema can be cloned into a new diagram.",
+      "createdAt": "2026-11-02T07:00:00.000Z",
+      "read": true
+    }
+  ],
+  "team": [
+    {
+      "id": "member_john",
+      "name": "John Doe",
+      "email": "john.doe@erdstudio.app",
+      "role": "Owner"
+    },
+    {
+      "id": "member_alex",
+      "name": "Alex Kim",
+      "email": "alex.kim@erdstudio.app",
+      "role": "Editor"
+    },
+    {
+      "id": "member_sam",
+      "name": "Sam Patel",
+      "email": "sam.patel@erdstudio.app",
+      "role": "Viewer"
+    }
+  ],
+  "templates": [
+    {
+      "id": "tpl_postgres",
+      "name": "PostgreSQL Schema",
+      "description": "Relational database template with common tables.",
+      "engine": "postgresql",
+      "kind": "sql",
+      "diagram": {
+        "name": "PostgreSQL Schema",
+        "description": "Users, orders, and products for a relational app.",
+        "engine": "postgresql",
+        "tables": [
+          {
+            "id": "tbl_users",
+            "name": "users",
+            "schema": "public",
+            "engine": "postgresql",
+            "description": "Accounts that place orders.",
+            "position": {
+              "x": 40,
+              "y": 36
+            },
+            "style": {
+              "header": "#3b82f6",
+              "title": "#ffffff",
+              "text": "#dbeafe",
+              "border": "#60a5fa"
+            },
+            "fields": [
+              {
+                "id": "fld_users_id",
+                "name": "id",
+                "type": "UUID",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "fld_users_name",
+                "name": "name",
+                "type": "VARCHAR(100)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "fld_users_email",
+                "name": "email",
+                "type": "VARCHAR(255)",
+                "key": "none",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "fld_users_created",
+                "name": "created_at",
+                "type": "TIMESTAMP",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              }
+            ]
+          },
+          {
+            "id": "tbl_orders",
+            "name": "orders",
+            "schema": "public",
+            "engine": "postgresql",
+            "description": "Customer orders and payment totals.",
+            "position": {
+              "x": 420,
+              "y": 24
+            },
+            "style": {
+              "header": "#16a34a",
+              "title": "#ffffff",
+              "text": "#dcfce7",
+              "border": "#4ade80"
+            },
+            "fields": [
+              {
+                "id": "fld_orders_id",
+                "name": "id",
+                "type": "UUID",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "fld_orders_user",
+                "name": "user_id",
+                "type": "UUID",
+                "key": "fk",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "fld_orders_status",
+                "name": "status",
+                "type": "VARCHAR(32)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "fld_orders_total",
+                "name": "total",
+                "type": "DECIMAL(10,2)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "fld_orders_created",
+                "name": "created_at",
+                "type": "TIMESTAMP",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              }
+            ]
+          },
+          {
+            "id": "tbl_products",
+            "name": "products",
+            "schema": "public",
+            "engine": "postgresql",
+            "description": "Stores product information including pricing and inventory details.",
+            "position": {
+              "x": 40,
+              "y": 310
+            },
+            "style": {
+              "header": "#ea580c",
+              "title": "#ffffff",
+              "text": "#ffedd5",
+              "border": "#fb923c"
+            },
+            "fields": [
+              {
+                "id": "fld_products_id",
+                "name": "id",
+                "type": "UUID",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "fld_products_name",
+                "name": "name",
+                "type": "VARCHAR(160)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "fld_products_price",
+                "name": "price",
+                "type": "DECIMAL(10,2)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "fld_products_description",
+                "name": "description",
+                "type": "TEXT",
+                "key": "none",
+                "notNull": false,
+                "unique": false
+              },
+              {
+                "id": "fld_products_stock",
+                "name": "stock",
+                "type": "INTEGER",
+                "key": "none",
+                "notNull": false,
+                "unique": false
+              },
+              {
+                "id": "fld_products_created",
+                "name": "created_at",
+                "type": "TIMESTAMP",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              }
+            ]
+          }
+        ],
+        "relationships": []
+      }
+    },
+    {
+      "id": "tpl_mysql",
+      "name": "MySQL Schema",
+      "description": "Popular MySQL database structure template.",
+      "engine": "mysql",
+      "kind": "sql",
+      "diagram": {
+        "name": "MySQL Schema",
+        "description": "A compact MySQL starter schema.",
+        "engine": "mysql",
+        "tables": [
+          {
+            "id": "tpl_mysql_users",
+            "name": "users",
+            "schema": "public",
+            "engine": "mysql",
+            "description": "",
+            "position": {
+              "x": 40,
+              "y": 40
+            },
+            "style": {
+              "header": "#3b82f6",
+              "title": "#ffffff",
+              "text": "#dbeafe",
+              "border": "#60a5fa"
+            },
+            "fields": [
+              {
+                "id": "tpl_mysql_users_id",
+                "name": "id",
+                "type": "BIGINT",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "tpl_mysql_users_email",
+                "name": "email",
+                "type": "VARCHAR(255)",
+                "key": "none",
+                "notNull": true,
+                "unique": true
+              }
+            ]
+          },
+          {
+            "id": "tpl_mysql_posts",
+            "name": "posts",
+            "schema": "public",
+            "engine": "mysql",
+            "description": "",
+            "position": {
+              "x": 380,
+              "y": 40
+            },
+            "style": {
+              "header": "#ea580c",
+              "title": "#ffffff",
+              "text": "#ffedd5",
+              "border": "#fb923c"
+            },
+            "fields": [
+              {
+                "id": "tpl_mysql_posts_id",
+                "name": "id",
+                "type": "BIGINT",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "tpl_mysql_posts_title",
+                "name": "title",
+                "type": "VARCHAR(160)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "tpl_mysql_posts_user",
+                "name": "user_id",
+                "type": "BIGINT",
+                "key": "fk",
+                "notNull": true,
+                "unique": false
+              }
+            ]
+          }
+        ],
+        "relationships": []
+      }
+    },
+    {
+      "id": "tpl_mongo",
+      "name": "MongoDB Schema",
+      "description": "NoSQL collection structure template.",
+      "engine": "mongodb",
+      "kind": "nosql",
+      "diagram": {
+        "name": "MongoDB Schema",
+        "description": "Collections for a document store.",
+        "engine": "mongodb",
+        "tables": [
+          {
+            "id": "tpl_mongo_products",
+            "name": "products",
+            "schema": "products",
+            "engine": "mongodb",
+            "description": "",
+            "position": {
+              "x": 48,
+              "y": 48
+            },
+            "style": {
+              "header": "#16a34a",
+              "title": "#ffffff",
+              "text": "#dcfce7",
+              "border": "#4ade80"
+            },
+            "fields": [
+              {
+                "id": "tpl_mongo_products_id",
+                "name": "_id",
+                "type": "ObjectId",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "tpl_mongo_products_name",
+                "name": "name",
+                "type": "String",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              },
+              {
+                "id": "tpl_mongo_products_price",
+                "name": "price",
+                "type": "Number",
+                "key": "none",
+                "notNull": false,
+                "unique": false
+              }
+            ]
+          }
+        ],
+        "relationships": []
+      }
+    },
+    {
+      "id": "tpl_hybrid",
+      "name": "SQL + NoSQL Hybrid",
+      "description": "Combine relational and NoSQL for modern applications.",
+      "engine": "hybrid",
+      "kind": "mixed",
+      "diagram": {
+        "name": "SQL + NoSQL Hybrid",
+        "description": "Orders in Postgres, product documents in MongoDB.",
+        "engine": "hybrid",
+        "tables": [
+          {
+            "id": "tpl_hybrid_orders",
+            "name": "orders",
+            "schema": "public",
+            "engine": "postgresql",
+            "description": "",
+            "position": {
+              "x": 40,
+              "y": 40
+            },
+            "style": {
+              "header": "#3b82f6",
+              "title": "#ffffff",
+              "text": "#dbeafe",
+              "border": "#60a5fa"
+            },
+            "fields": [
+              {
+                "id": "tpl_hybrid_orders_id",
+                "name": "id",
+                "type": "UUID",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "tpl_hybrid_orders_total",
+                "name": "total",
+                "type": "DECIMAL(10,2)",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              }
+            ]
+          },
+          {
+            "id": "tpl_hybrid_catalog",
+            "name": "catalog",
+            "schema": "catalog",
+            "engine": "mongodb",
+            "description": "",
+            "position": {
+              "x": 380,
+              "y": 40
+            },
+            "style": {
+              "header": "#16a34a",
+              "title": "#ffffff",
+              "text": "#dcfce7",
+              "border": "#4ade80"
+            },
+            "fields": [
+              {
+                "id": "tpl_hybrid_catalog_id",
+                "name": "_id",
+                "type": "ObjectId",
+                "key": "pk",
+                "notNull": true,
+                "unique": true
+              },
+              {
+                "id": "tpl_hybrid_catalog_name",
+                "name": "name",
+                "type": "String",
+                "key": "none",
+                "notNull": true,
+                "unique": false
+              }
+            ]
+          }
+        ],
+        "relationships": []
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "id": "diag_ecom",
+      "name": "E-commerce Database",
+      "description": "Customers, orders, products, and inventory.",
+      "engine": "postgresql",
+      "createdAt": "2026-10-30T12:00:00.000Z",
+      "updatedAt": "2026-11-02T13:08:25.737Z",
+      "tables": [
+        {
+          "id": "tbl_users",
+          "name": "users",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "Accounts that place orders.",
+          "position": {
+            "x": 24,
+            "y": 38
+          },
+          "style": {
+            "header": "#3b82f6",
+            "title": "#ffffff",
+            "text": "#dbeafe",
+            "border": "#60a5fa"
+          },
+          "fields": [
+            {
+              "id": "fld_users_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_users_name",
+              "name": "name",
+              "type": "VARCHAR(100)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_users_email",
+              "name": "email",
+              "type": "VARCHAR(255)",
+              "key": "none",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_users_created",
+              "name": "created_at",
+              "type": "TIMESTAMP",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        },
+        {
+          "id": "tbl_orders",
+          "name": "orders",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "Customer orders and payment totals.",
+          "position": {
+            "x": 394,
+            "y": 24
+          },
+          "style": {
+            "header": "#16a34a",
+            "title": "#ffffff",
+            "text": "#dcfce7",
+            "border": "#4ade80"
+          },
+          "fields": [
+            {
+              "id": "fld_orders_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_orders_user",
+              "name": "user_id",
+              "type": "UUID",
+              "key": "fk",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_orders_status",
+              "name": "status",
+              "type": "VARCHAR(32)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_orders_total",
+              "name": "total",
+              "type": "DECIMAL(10,2)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_orders_created",
+              "name": "created_at",
+              "type": "TIMESTAMP",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        },
+        {
+          "id": "tbl_products",
+          "name": "products",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "Stores product information including pricing and inventory details.",
+          "position": {
+            "x": 394,
+            "y": 290
+          },
+          "style": {
+            "header": "#ea580c",
+            "title": "#ffffff",
+            "text": "#ffedd5",
+            "border": "#fb923c"
+          },
+          "fields": [
+            {
+              "id": "fld_products_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_products_name",
+              "name": "name",
+              "type": "VARCHAR(160)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_products_price",
+              "name": "price",
+              "type": "DECIMAL(10,2)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_products_description",
+              "name": "description",
+              "type": "TEXT",
+              "key": "none",
+              "notNull": false,
+              "unique": false
+            },
+            {
+              "id": "fld_products_stock",
+              "name": "stock",
+              "type": "INTEGER",
+              "key": "none",
+              "notNull": false,
+              "unique": false
+            },
+            {
+              "id": "fld_products_created",
+              "name": "created_at",
+              "type": "TIMESTAMP",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        },
+        {
+          "id": "tbl_items",
+          "name": "order_items",
+          "schema": "order_items",
+          "engine": "postgresql",
+          "description": "Line items that connect orders to products.",
+          "position": {
+            "x": 760,
+            "y": 160
+          },
+          "style": {
+            "header": "#7c3aed",
+            "title": "#ffffff",
+            "text": "#ede9fe",
+            "border": "#a78bfa"
+          },
+          "fields": [
+            {
+              "id": "fld_items_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_items_order",
+              "name": "order_id",
+              "type": "UUID",
+              "key": "fk",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_items_product",
+              "name": "product_id",
+              "type": "UUID",
+              "key": "fk",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_items_qty",
+              "name": "quantity",
+              "type": "INTEGER",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_items_price",
+              "name": "price",
+              "type": "DECIMAL(10,2)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        },
+        {
+          "id": "tbl_customers",
+          "name": "customers",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "Billing profiles linked to the storefront.",
+          "position": {
+            "x": -80,
+            "y": 340
+          },
+          "style": {
+            "header": "#0d9488",
+            "title": "#ffffff",
+            "text": "#ccfbf1",
+            "border": "#2dd4bf"
+          },
+          "fields": [
+            {
+              "id": "fld_customers_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_customers_name",
+              "name": "full_name",
+              "type": "VARCHAR(120)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            },
+            {
+              "id": "fld_customers_email",
+              "name": "email",
+              "type": "VARCHAR(255)",
+              "key": "none",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "fld_customers_created",
+              "name": "created_at",
+              "type": "TIMESTAMP",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        },
+        {
+          "id": "tbl_payments",
+          "name": "payments",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "Payment records",
+          "position": {
+            "x": -280,
+            "y": 180
+          },
+          "style": {
+            "header": "#3b82f6",
+            "title": "#ffffff",
+            "text": "#dbeafe",
+            "border": "#60a5fa"
+          },
+          "fields": [
+            {
+              "id": "fld_payments_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "rel_places",
+          "fromTableId": "tbl_users",
+          "fromFieldId": "fld_users_id",
+          "toTableId": "tbl_orders",
+          "toFieldId": "fld_orders_user",
+          "cardinality": "1:N",
+          "label": "places"
+        },
+        {
+          "id": "rel_contains",
+          "fromTableId": "tbl_orders",
+          "fromFieldId": "fld_orders_id",
+          "toTableId": "tbl_items",
+          "toFieldId": "fld_items_order",
+          "cardinality": "1:N",
+          "label": "contains"
+        },
+        {
+          "id": "rel_references",
+          "fromTableId": "tbl_products",
+          "fromFieldId": "fld_products_id",
+          "toTableId": "tbl_items",
+          "toFieldId": "fld_items_product",
+          "cardinality": "1:N",
+          "label": "references"
+        },
+        {
+          "id": "69d87513-e867-41a8-8d24-ae659eb0645b",
+          "fromTableId": "tbl_users",
+          "fromFieldId": "fld_users_id",
+          "toTableId": "tbl_orders",
+          "toFieldId": "fld_orders_id",
+          "label": "references",
+          "cardinality": "1:N"
+        }
+      ]
+    },
+    {
+      "id": "diag_saas",
+      "name": "SaaS Application",
+      "description": "Users, teams, subscriptions.",
+      "engine": "postgresql",
+      "createdAt": "2026-11-01T11:00:00.000Z",
+      "updatedAt": "2026-11-02T12:46:41.390Z",
+      "tables": [
+        {
+          "id": "saas_users",
+          "name": "users",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "",
+          "position": {
+            "x": 60,
+            "y": 40
+          },
+          "style": {
+            "header": "#3b82f6",
+            "title": "#ffffff",
+            "text": "#dbeafe",
+            "border": "#60a5fa"
+          },
+          "fields": [
+            {
+              "id": "saas_users_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "saas_users_email",
+              "name": "email",
+              "type": "VARCHAR(255)",
+              "key": "none",
+              "notNull": true,
+              "unique": true
+            }
+          ]
+        },
+        {
+          "id": "saas_teams",
+          "name": "teams",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "",
+          "position": {
+            "x": 320,
+            "y": 40
+          },
+          "style": {
+            "header": "#7c3aed",
+            "title": "#ffffff",
+            "text": "#ede9fe",
+            "border": "#a78bfa"
+          },
+          "fields": [
+            {
+              "id": "saas_teams_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "saas_teams_name",
+              "name": "name",
+              "type": "VARCHAR(120)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "id": "diag_inventory",
+      "name": "Inventory System",
+      "description": "Products, warehouses, stock.",
+      "engine": "mysql",
+      "createdAt": "2026-10-31T14:00:00.000Z",
+      "updatedAt": "2026-11-01T10:00:00.000Z",
+      "tables": [
+        {
+          "id": "inv_products",
+          "name": "products",
+          "schema": "public",
+          "engine": "mysql",
+          "description": "",
+          "position": {
+            "x": 40,
+            "y": 40
+          },
+          "style": {
+            "header": "#ea580c",
+            "title": "#ffffff",
+            "text": "#ffedd5",
+            "border": "#fb923c"
+          },
+          "fields": [
+            {
+              "id": "inv_products_id",
+              "name": "id",
+              "type": "BIGINT",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "inv_products_sku",
+              "name": "sku",
+              "type": "VARCHAR(64)",
+              "key": "none",
+              "notNull": true,
+              "unique": true
+            }
+          ]
+        },
+        {
+          "id": "inv_warehouses",
+          "name": "warehouses",
+          "schema": "public",
+          "engine": "mysql",
+          "description": "",
+          "position": {
+            "x": 360,
+            "y": 40
+          },
+          "style": {
+            "header": "#0d9488",
+            "title": "#ffffff",
+            "text": "#ccfbf1",
+            "border": "#2dd4bf"
+          },
+          "fields": [
+            {
+              "id": "inv_warehouses_id",
+              "name": "id",
+              "type": "BIGINT",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "inv_warehouses_name",
+              "name": "name",
+              "type": "VARCHAR(120)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "id": "diag_blog",
+      "name": "Blog Platform",
+      "description": "Users, posts, comments.",
+      "engine": "postgresql",
+      "createdAt": "2026-10-30T14:00:00.000Z",
+      "updatedAt": "2026-10-31T10:00:00.000Z",
+      "tables": [
+        {
+          "id": "blog_posts",
+          "name": "posts",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "",
+          "position": {
+            "x": 40,
+            "y": 40
+          },
+          "style": {
+            "header": "#16a34a",
+            "title": "#ffffff",
+            "text": "#dcfce7",
+            "border": "#4ade80"
+          },
+          "fields": [
+            {
+              "id": "blog_posts_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "blog_posts_title",
+              "name": "title",
+              "type": "VARCHAR(160)",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        },
+        {
+          "id": "blog_comments",
+          "name": "comments",
+          "schema": "public",
+          "engine": "postgresql",
+          "description": "",
+          "position": {
+            "x": 360,
+            "y": 40
+          },
+          "style": {
+            "header": "#db2777",
+            "title": "#ffffff",
+            "text": "#fce7f3",
+            "border": "#f472b6"
+          },
+          "fields": [
+            {
+              "id": "blog_comments_id",
+              "name": "id",
+              "type": "UUID",
+              "key": "pk",
+              "notNull": true,
+              "unique": true
+            },
+            {
+              "id": "blog_comments_body",
+              "name": "body",
+              "type": "TEXT",
+              "key": "none",
+              "notNull": true,
+              "unique": false
+            }
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  ]
+}
